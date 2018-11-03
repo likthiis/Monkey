@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.monkey.banana.DAO.DeviceConditionDAO">
+    <insert id="registerDeviceByDeviceInfo" parameterType="com.monkey.banana.Class.DeviceInfo">
+        insert into devicebaseinfo values (#{baseinfo.ip},#{baseinfo.status},#{baseinfo.timestamp})
+    </insert>
+
+    <insert id="registerDeviceByDeviceConfig" parameterType="com.monkey.banana.Class.DeviceConfig">
+        insert into deviceconfiginfo values (#{configinfo.ip},#{configinfo.config})
+    </insert>
+
+    <delete id="withdrawDeviceByIp" parameterType="String">
+        delete from devicebaseinfo   where ip = #{ip};
+        delete from deviceconfiginfo where ip = #{ip}
+    </delete>
+
+    <select id="showCountOfSpecificObject" parameterType="String" resultType="int">
+        select count(*) from devicebaseinfo where ip = #{ip}
+    </select>
+</mapper>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"></property>
+        <property name="url" value="jdbc:mysql://localhost:3306/monkeycage?characterEncoding=UTF-8&amp;serverTimezone=GMT%2B8&amp;allowMultiQueries=true"></property>
+        <property name="username" value="qinne"></property>
+        <property name="password" value="111111"></property>
+    </bean>
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="configLocation" value="classpath:mybatis.xml"></property>
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+
+    <bean id="deviceConditionDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="com.monkey.banana.DAO.DeviceConditionDAO"></property>
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+    </bean>
+
+    <bean id="baseInfo" class="com.monkey.banana.Entity.DeviceBaseInfoEntity"/>
+    <bean id="configInfo" class="com.monkey.banana.Entity.DeviceConfigInfoEntity"/>
+</beans>
