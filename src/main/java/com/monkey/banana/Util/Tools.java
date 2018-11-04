@@ -3,7 +3,7 @@ package com.monkey.banana.Util;
 import java.sql.Timestamp;
 
 public class Tools {
-    private static final int offset = 60000; //1000为一秒，这里刚好一分钟
+    private static final long offset = 30000; //1000为一秒，这里刚好一分钟
 
 
     // true代表着发过来的包在时间限制之内，false代表着已经过期

@@ -107,8 +107,10 @@ public class HeartbeatTransactionService {
 
             String nowTimeStamp = deviceModel.getTimestamp();
 
-            Timestamp last = Timestamp.valueOf(lastTimeStamp);
-            Timestamp now = Timestamp.valueOf(nowTimeStamp);
+
+
+            Timestamp last = new Timestamp(Long.parseLong(lastTimeStamp));
+            Timestamp now = new Timestamp(Long.parseLong(nowTimeStamp));
 
             isVa = Tools.timeJudge(last,now,10000);
 

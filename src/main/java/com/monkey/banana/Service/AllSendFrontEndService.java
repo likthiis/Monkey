@@ -11,6 +11,7 @@ import java.util.List;
 public class AllSendFrontEndService {
 
     private Gson gson = new Gson();
+    private List<DeviceInfo> deviceInfos;
 
     public String doAll() {
         String data;
@@ -24,7 +25,6 @@ public class AllSendFrontEndService {
     }
 
     private List<DeviceInfo> getAllDataOfDevices() {
-        List<DeviceInfo> deviceInfos;
 
         try {
             // 查阅spring.xml配置文件，导入DAO接口形成的类
@@ -38,5 +38,9 @@ public class AllSendFrontEndService {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public List<DeviceInfo> getDeviceInfos() {
+        return deviceInfos;
     }
 }

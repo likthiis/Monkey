@@ -54,6 +54,7 @@ public class KafkaConsumer extends Thread{
             System.out.println("receive：" + kafkaData);
             // kafka消费者的进程要把这个数据传送给生成临时列表的进程
 
+
             // 错误代码
             //DeviceModel deviceModel = gson.fromJson(kafkaData, DeviceModel.class);
             //TempListSaver.deviceModels.add(deviceModel);

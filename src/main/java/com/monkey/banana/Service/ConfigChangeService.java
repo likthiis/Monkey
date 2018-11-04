@@ -65,7 +65,7 @@ public class ConfigChangeService {
             int result = dcDAO.searchDeviceInfoByIp(deviceModel.getIp());
 
             if(result == 1) {
-                return false;
+                return true;
             }
             return false;
 

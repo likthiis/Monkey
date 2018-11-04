@@ -19,4 +19,64 @@
     <select id="showCountOfSpecificObject" parameterType="String" resultType="int">
         select count(*) from devicebaseinfo where ip = #{ip}
     </select>
+
+    <resultMap type="com.monkey.banana.SelfChecking.SelfChecking" id="sCheckingInfo">
+        <id     column="ip"         property="ip"        jdbcType="VARCHAR"/>
+        <result column="timestamp"  property="timestamp" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="selfChecking" resultMap="sCheckingInfo" >
+        select ip,timestamp from devicebaseinfo
+    </select>
+
+    <resultMap type="com.monkey.banana.Class.DeviceInfo" id="sqlDeviceInfo">
+        <id     column="ip"         property="ip"        jdbcType="VARCHAR"/>
+        <result column="status"     property="status"    jdbcType="VARCHAR" />
+        <result column="timestamp"  property="timestamp" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="showAllDevicesInfo" resultMap="sqlDeviceInfo">
+      select * from devicebaseinfo
+    </select>
+
+    <resultMap type="com.monkey.banana.Class.SendModel" id="sqlSendSpecificInfo">
+        <id     column="ip"         property="ip"        jdbcType="VARCHAR"/>
+        <result column="status"     property="status"    jdbcType="VARCHAR" />
+        <result column="config"     property="config"    jdbcType="VARCHAR" />
+        <result column="timestamp"  property="timestamp" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="statusShowSpecific" parameterType="String" resultMap="sqlSendSpecificInfo">
+        select devicebaseinfo.ip,devicebaseinfo.status,devicebaseinfo.timestamp,deviceconfiginfo.config from devicebaseinfo,deviceconfiginfo where devicebaseinfo.ip = #{ip} and deviceconfiginfo.ip = #{ip};
+    </select>
+
+
+    <select id="configShowSpecific" parameterType="String" resultType="String">
+        select config from deviceconfiginfo where ip = #{ip};
+    </select>
+
+    <update id="updataDeviceByConfig" parameterType="String">
+        update deviceconfiginfo SET config = #{config} where ip = #{ip}
+    </update>
+
+
+    <select id="searchDeviceInfoByIp" parameterType="String" resultType="int">
+        select count(*) from deviceconfiginfo where ip = #{ip}
+    </select>
+
+
+    <update id="heartbeatUpdate" parameterType="String">
+        update devicebaseinfo SET timestamp = #{timestamp} where ip = #{ip}
+    </update>
+
+
+    <resultMap type="com.monkey.banana.Class.DeviceInfo" id="sqlInfoDevice">
+        <id     column="ip"         property="ip"        jdbcType="VARCHAR"/>
+        <result column="status"     property="status"    jdbcType="VARCHAR" />
+        <result column="timestamp"  property="timestamp" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="getDeviceInfoByIp" parameterType="String" resultMap="sqlInfoDevice">
+        select ip,status,timestamp from devicebaseinfo where ip = #{ip}
+    </select>
 </mapper>

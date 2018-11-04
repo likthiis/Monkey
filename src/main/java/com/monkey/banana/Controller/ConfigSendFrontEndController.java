@@ -4,6 +4,8 @@ package com.monkey.banana.Controller;
 import com.monkey.banana.Service.ConfigSendFrontEndService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+
 @RestController
 public class ConfigSendFrontEndController {
 
@@ -11,9 +13,12 @@ public class ConfigSendFrontEndController {
 
     @RequestMapping(value = "/getone/config",method = RequestMethod.POST)
     @ResponseBody
-    public String send(@RequestParam("ip") String ip) {
+    public HashMap<String,String> send(@RequestParam("ip") String ip) {
         String data = "No DeviceModel Info";
+        HashMap<String,String> map = new HashMap<>();
         data = service.doAll(ip);
-        return data;
+        map.put("data",data);
+        System.out.println("[控制器][配置信息单独发送]" + map);
+        return map;
     }
 }

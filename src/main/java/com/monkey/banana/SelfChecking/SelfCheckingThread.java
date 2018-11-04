@@ -19,44 +19,33 @@ public class SelfCheckingThread extends Thread{
         ApplicationContext atc = new ClassPathXmlApplicationContext("spring.xml");
         dcDAO = (DeviceConditionDAO) atc.getBean("deviceConditionDAO");
 
-        devicesInfo = dcDAO.selfChecking(); // 仅返回带有ip和timestamp的数据集
 
-        for(SelfChecking a : devicesInfo) {
-            if(Tools.timeJudge(Timestamp.valueOf(a.getTimestamp()))) { // 当过期时
-                System.out.println("[自检处理]数据库中ip为" + a.getIp() + "的设备过期，开始删除");
-                int result = dcDAO.deleteOneDeviceAllInfo(a.getIp());
-                if(result == 1) {
-                    System.out.println("[自检处理]数据库中ip为" + a.getIp() + "的设备过期，数据删除");
-                } else {
-                    System.out.println("[自检处理]删除失败");
+
+        while (true) {
+            try {
+                System.out.println("[自检处理]自检开始");
+                devicesInfo = dcDAO.selfChecking(); // 仅返回带有ip和timestamp的数据集
+                for (SelfChecking a : devicesInfo) {
+                    System.out.println("[自检处理]ip为" + a.getIp() + "的时间戳为" + a.getTimestamp());
+                    boolean judge = Tools.timeJudge(new Timestamp(Long.parseLong(a.getTimestamp())));
+                    System.out.println("[自检处理]结果为[" + (!judge) + "]");
+                    if (!judge) { // 当过期时
+
+                        System.out.println("[自检处理]数据库中ip为" + a.getIp() + "的设备过期，开始删除");
+                        int result = dcDAO.withdrawDeviceByIp(a.getIp());
+                        if (result == 1) {
+                            System.out.println("[自检处理]数据库中ip为" + a.getIp() + "的设备过期，数据删除");
+                        } else {
+                            System.out.println("[自检处理]删除失败");
+                        }
+                    }
                 }
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                System.out.println("[自检处理]异常抛出");
             }
         }
     }
 
-    public class SelfChecking {
-        private String ip;
-        private String timestamp;
-
-        public SelfChecking(String ip, String timestamp) {
-            this.ip = ip;
-            this.timestamp = timestamp;
-        }
-
-        public String getIp() {
-            return ip;
-        }
-
-        public void setIp(String ip) {
-            this.ip = ip;
-        }
-
-        public String getTimestamp() {
-            return timestamp;
-        }
-
-        public void setTimestamp(String timestamp) {
-            this.timestamp = timestamp;
-        }
-    }
 }

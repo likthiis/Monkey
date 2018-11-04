@@ -4,6 +4,7 @@ import com.monkey.banana.Class.DeviceConfig;
 import com.monkey.banana.Class.DeviceInfo;
 import com.monkey.banana.Class.DeviceModel;
 import com.monkey.banana.Class.SendModel;
+import com.monkey.banana.SelfChecking.SelfChecking;
 import com.monkey.banana.SelfChecking.SelfCheckingThread;
 import org.apache.ibatis.annotations.Param;
 
@@ -24,29 +25,41 @@ public interface DeviceConditionDAO {
     public int withdrawDevice(@Param("ip")String id); // 已经配置
 
     public int showCountOfSpecificObject(@Param("ip")String id); // 已经配置
-    public int updataDeviceByConfig(String id,String config);
+
+    public List<DeviceInfo> showAllDevicesInfo(); // 已经配置
+
+    public SendModel statusShowSpecific(@Param("ip")String id); // 已经配置
+
+    public String configShowSpecific(@Param("ip")String id); // 已经配置
+
+    public int updataDeviceByConfig(@Param("ip")String id,@Param("config")String config); // 已经配置
+
+    public int searchDeviceInfoByIp(@Param("ip")String id); // 已经配置
+
+    public int heartbeatUpdate(@Param("ip")String id, @Param("timestamp")String timestamp); // 已经配置
+
+    public DeviceInfo getDeviceInfoByIp(@Param("ip")String id); // 已经配置
+
     public int updataDeviceByStatus (String id,String status);
     public List<DeviceModel> showAllDevices();
     public DeviceModel showSpecificDevice(String id);
     // 返回SendModel类型
-    public SendModel statusShowSpecific(String id);
-    public String configShowSpecific(String id);
+
+
     public int showCount();
 
     // 看看这个能不能一次执行两条或者两条以上的SQL指令
     public int withdrawDeviceByIp(String id);
 
 
-    public int heartbeatUpdate(String id, String timestamp);
-    public DeviceInfo getDeviceInfoByIp(String id);
-    public int searchDeviceInfoByIp(String id);
 
-    public List<DeviceInfo> showAllDevicesInfo();
+
+
+
+
 
 
     int deleteOneDeviceAllInfo(String id);
 
-    List<SelfCheckingThread.SelfChecking> selfChecking();
-
-
+    List<SelfChecking> selfChecking();
 }
