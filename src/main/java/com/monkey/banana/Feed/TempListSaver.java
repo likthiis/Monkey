@@ -7,18 +7,17 @@ import com.monkey.banana.Class.SendModel;
 import com.monkey.banana.Service.AllSendFrontEndService;
 import com.monkey.banana.Service.ConfigSendFrontEndService;
 import com.monkey.banana.Util.Tools;
-import org.apache.kafka.common.network.Send;
 
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class TempListSaver extends Thread{
-    public static Map<String, SendModel> sendModels;
+public class TempListSaver extends Thread {
+    public static Map<String, SendModel> sendModels = new HashMap<String, SendModel>();
 
-    private Gson gson;
+    private Gson gson = new Gson();
 
-    // 这里还没写
 
     /* 这里要加个判断，需要判断是否过期后才能注入内存表 */
     /* 这里要加个判断，需要判断是否是心跳包或者注册表后才能注入内存表 */
@@ -73,25 +72,28 @@ public class TempListSaver extends Thread{
 
     @Override
     public void run() {
-        try {
-            System.out.println("[内存表存储处理]数据库检查");
-            AllSendFrontEndService service = new AllSendFrontEndService();
-            service.doAll();
-            List<DeviceInfo> ds = service.getDeviceInfos();
-            for (DeviceInfo d : ds) {
-                SendModel s = sendModels.get(d.getIp());
-                if (s != null) {
-                    Timestamp t = new Timestamp(Long.parseLong(s.getTimestamp()));
-                    if (!Tools.timeJudge(t)) {
-                        sendModels.remove(d.getIp());
+        while(true) {
+            try {
+                System.out.println("[内存表存储处理]数据库检查");
+                AllSendFrontEndService service = new AllSendFrontEndService();
+                service.doAll();
+                List<DeviceInfo> ds = service.getDeviceInfos();
+                for (DeviceInfo d : ds) {
+                    SendModel s = sendModels.get(d.getIp());
+                    if (s != null) {
+                        Timestamp t = new Timestamp(Long.parseLong(s.getTimestamp()));
+                        if (!Tools.timeJudge(t)) {
+                            System.out.println("[内存表存储处理][删除数据]ip为" + d.getIp() + "的设备需要删除");
+                            sendModels.remove(d.getIp());
+                        }
+                    } else {
+                        sendModels.put(d.getIp(), tranDeviceInfoToSendModel(d));
                     }
-                } else {
-                    sendModels.put(d.getIp(), tranDeviceInfoToSendModel(d));
                 }
+                Thread.sleep(10000);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            Thread.sleep(120000);
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 

@@ -12,6 +12,7 @@ public class AllSendFrontEndController {
 
     AllSendFrontEndService service = new AllSendFrontEndService();
 
+    // 获得所有信息
     @RequestMapping(value = "/getall",method = RequestMethod.GET)
     @ResponseBody
     public String send() {

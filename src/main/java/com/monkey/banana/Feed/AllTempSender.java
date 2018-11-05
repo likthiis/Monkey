@@ -21,13 +21,14 @@ public class AllTempSender {
 
     Gson gson = new Gson();
 
+    // 从内存中查找正在运行的设备
     @RequestMapping(value = "/now",method = RequestMethod.GET)
     @ResponseBody
     public HashMap<String,String> send() {
         String data = "No DeviceModel Info";
 
         HashMap<String,String> map = new HashMap<>();
-        System.out.println("[内存表信息发送]" + map);
+        System.out.println("[内存表信息发送]");
 
         Map<String, SendModel> tmp = TempListSaver.sendModels;
 

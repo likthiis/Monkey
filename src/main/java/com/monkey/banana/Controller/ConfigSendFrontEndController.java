@@ -11,6 +11,7 @@ public class ConfigSendFrontEndController {
 
     ConfigSendFrontEndService service = new ConfigSendFrontEndService();
 
+    // 获得特定设备的配置信息
     @RequestMapping(value = "/getone/config",method = RequestMethod.POST)
     @ResponseBody
     public HashMap<String,String> send(@RequestParam("ip") String ip) {

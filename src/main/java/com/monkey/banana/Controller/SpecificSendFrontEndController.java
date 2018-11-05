@@ -9,6 +9,7 @@ public class SpecificSendFrontEndController {
 
     SpecificSendFrontEndService service = new SpecificSendFrontEndService();
 
+    // 从数据库查找在线的设备
     @RequestMapping(value = "/getone/online",method = RequestMethod.POST)
     @ResponseBody
     public String send(@RequestParam("ip") String ip) {

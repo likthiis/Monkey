@@ -3,6 +3,7 @@ package com.monkey.banana;
 import com.google.gson.Gson;
 import com.monkey.banana.Class.DeviceModel;
 import com.monkey.banana.Controller.KafkaReceiveController;
+import com.monkey.banana.Feed.TempListSaver;
 import com.monkey.banana.SelfChecking.SelfCheckingThread;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,6 +13,8 @@ public class BananaApplication {
 
     private static Gson gson = new Gson();
     private static KafkaReceiveController unitTest;
+    private static TempListSaver tmpS = new TempListSaver();
+    private static SelfCheckingThread sfT = new SelfCheckingThread();
 
     public static void main(String[] args) throws InterruptedException {
         //SpringApplication.run(BananaApplication.class, args);
@@ -20,19 +23,28 @@ public class BananaApplication {
 
 
         // 单元测试
-        //insertBath();
+        // 批量注册
+        insertBath();
 
+        // 改变配置
         //changeConfigByIp("127.0.0.4", "dell");
 
+        // 数据库自检
         //SelfCheckingThread selfCheckingThread = new SelfCheckingThread();
         //selfCheckingThread.start();
 
-        registerAndKeepingSend("192.168.1.102");
 
+
+
+        // 撤销设备
         //unitTestOfWithDrawDevice();
 
-        //SpringApplication.run(BananaApplication.class, args);
-
+        // http响应系统
+        SpringApplication.run(BananaApplication.class, args);
+        tmpS.start();
+        sfT.start();
+        // 注册设备+发送心跳包
+        registerAndKeepingSend("192.168.1.102");
     }
 
     private static void registerAndKeepingSend(String ip) throws InterruptedException {
@@ -60,6 +72,8 @@ public class BananaApplication {
         );
 
         String JSONData = gson.toJson(unitTestModel);
+
+        tmpS.invokeForCheck(JSONData);
         unitTest.getInfo(JSONData);
     }
 
@@ -75,6 +89,8 @@ public class BananaApplication {
         );
 
         String JSONData = gson.toJson(unitTestModel);
+
+        tmpS.invokeForCheck(JSONData);
         unitTest.getInfo(JSONData);
     }
 
@@ -94,6 +110,7 @@ public class BananaApplication {
     }
 
     private static void insertBath() {
+        System.out.println("单元测试：批量注册模拟");
         // 批量注入
         int NUMBER = 10;
 
@@ -135,6 +152,7 @@ public class BananaApplication {
 
         String JSONData = gson.toJson(unitTestModel);
 
+        tmpS.invokeForCheck(JSONData);
         unitTest.getInfo(JSONData);
     }
 
