@@ -79,4 +79,22 @@
     <select id="getDeviceInfoByIp" parameterType="String" resultMap="sqlInfoDevice">
         select ip,status,timestamp from devicebaseinfo where ip = #{ip}
     </select>
+
+
+    <!-- 注册与登录模块:实现：1.注册 2.登录 3.注销-->
+    <insert id="registerUser">
+        insert into user values (#{userInfo.username},#{userInfo.password})
+    </insert>
+
+    <select id="checkUserExistence" resultType="int">
+        select count(*) from user where username = #{userInfo.username} and password = #{userInfo.password}
+    </select>
+
+    <select id="checkUserExistenceJustById" resultType="int">
+        select count(*) from user where username = #{username}
+    </select>
+
+    <delete id="withdrawUser">
+        delete from user where username = #{username}
+    </delete>
 </mapper>

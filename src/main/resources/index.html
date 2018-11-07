@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Creative - Bootstrap 3 Responsive Admin Template">
+    <meta name="author" content="GeeksLabs">
+    <meta name="keyword" content="Creative, Dashboard, Admin, Template, Theme, Bootstrap, Responsive, Retina, Minimal">
+
+    <title>Monitor information</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <!-- bootstrap theme -->
+    <link href="/static/css/bootstrap-theme.css" rel="stylesheet">
+    <!--external css-->
+    <!-- font icon -->
+    <link href="/static/css/elegant-icons-style.css" rel="stylesheet" />
+    <link href="/static/css/font-awesome.min.css" rel="stylesheet" />
+    <!-- Custom styles -->
+    <link href="/static/css/style.css" rel="stylesheet">
+    <link href="/static/css/style-responsive.css" rel="stylesheet" />
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 -->
+    <!--[if lt IE 9]>
+    <script src="/static/js/html5shiv.js"></script>
+    <script src="/static/js/respond.min.js"></script>
+    <script src="/static/js/lte-ie7.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+<!-- container section start -->
+<section id="container" class="">
+    <!--header start-->
+    <header class="header dark-bg">
+        <div class="toggle-nav">
+            <div class="icon-reorder tooltips" data-original-title="Toggle Navigation" data-placement="bottom"><i class="icon_menu"></i></div>
+        </div>
+        <!--logo start-->
+        <a href="index.html" class="logo">Heart <span class="lite">Monitor</span></a>
+        <!--logo end-->
+    </header>
+    <!--header end-->
+
+    <!--sidebar start-->
+    <aside>
+        <div id="sidebar" class="nav-collapse ">
+            <!-- sidebar menu start-->
+            <ul class="sidebar-menu">
+                <li class="active">
+                    <a class="" href="#">
+                        <i class="icon_house_alt"></i>
+                        <span>Monitor</span>
+                    </a>
+                </li>
+            </ul>
+            <!-- sidebar menu end-->
+        </div>
+    </aside>
+    <!--sidebar end-->
+
+    <!--main content start-->
+    <section id="main-content">
+        <section class="wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h3 class="page-header"><i class="fa fa-table"></i> Details</h3>
+                    <ol class="breadcrumb">
+                        <li><i class="fa fa-home"></i><a href="#">Home</a></li>
+                        <li><i class="fa fa-table"></i>Details</li>
+                        <li><button class="fa btn-default" type="button" id = "button" value="refresh" onclick="refresh()">所有设备</button></li>
+                        <li><button class="fa btn-default" type="button" id = "button1" value="online" onclick="online()">在线设备</button></li>
+                        <li><button class="fa btn-success" type="button" id = "button2" value="withdraw" onclick="withdraw()">注销用户</button></li>
+                    </ol>
+                </div>
+            </div>
+            <!-- page start-->
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <section class="panel">
+                        <header class="panel-heading">
+                             table
+                        </header>
+                        <div class="table-responsive">
+                            <table id = "monitor-table" class="table">
+
+                            </table>
+                        </div>
+
+                    </section>
+                </div>
+            </div>
+
+            <!-- page end-->
+        </section>
+    </section>
+
+</section>
+<!-- container section end -->
+<!-- javascripts -->
+<script src="/static/js/jquery.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<!-- nicescroll -->
+<script src="/static/js/jquery.scrollTo.min.js"></script>
+<script src="/static/js/jquery.nicescroll.js" type="text/javascript"></script>
+<!--custome script for all page-->
+<script src="/static/js/scripts.js"></script>
+<script type="text/javascript">
+    window.alert = function(msg, callback) {
+        //去掉提示框标题
+        var div = document.createElement("div");
+        div.innerHTML = "<style type=\"text/css\">"
+            + ".nbaMask { position: fixed; z-index: 1000; top: 0; right: 0; left: 0; bottom: 0; background: rgba(0, 0, 0, 0.5); }                                                                                                                                                                       "
+            + ".nbaMaskTransparent { position: fixed; z-index: 1000; top: 0; right: 0; left: 0; bottom: 0; }                                                                                                                                                                                            "
+            + ".nbaDialog { position: fixed; z-index: 5000; width: 80%; max-width: 300px; top: 50%; left: 50%; -webkit-transform: translate(-50%, -50%); transform: translate(-50%, -50%); background-color: #fff; text-align: center; border-radius: 8px; overflow: hidden; opacity: 1; color: white; }"
+            + ".nbaDialog .nbaDialogHd { padding: .2rem .27rem .08rem .27rem; }                                                                                                                                                                                                                         "
+            + ".nbaDialog .nbaDialogHd .nbaDialogTitle { font-size: 17px; font-weight: 400; }                                                                                                                                                                                                           "
+            + ".nbaDialog .nbaDialogBd { padding: 0 .27rem; font-size: 15px; line-height: 1.3; word-wrap: break-word; word-break: break-all; color: #000000; }                                                                                                                                          "
+            + ".nbaDialog .nbaDialogFt { position: relative; line-height: 48px; font-size: 17px; display: -webkit-box; display: -webkit-flex; display: flex; }                                                                                                                                          "
+            + ".nbaDialog .nbaDialogFt:after { content: \" \"; position: absolute; left: 0; top: 0; right: 0; height: 1px; border-top: 1px solid #e6e6e6; color: #e6e6e6; -webkit-transform-origin: 0 0; transform-origin: 0 0; -webkit-transform: scaleY(0.5); transform: scaleY(0.5); }               "
+            + ".nbaDialog .nbaDialogBtn { display: block; -webkit-box-flex: 1; -webkit-flex: 1; flex: 1; color: #09BB07; text-decoration: none; -webkit-tap-highlight-color: transparent; position: relative; margin-bottom: 0; }                                                                       "
+            + ".nbaDialog .nbaDialogBtn:after { content: \" \"; position: absolute; left: 0; top: 0; width: 1px; bottom: 0; border-left: 1px solid #e6e6e6; color: #e6e6e6; -webkit-transform-origin: 0 0; transform-origin: 0 0; -webkit-transform: scaleX(0.5); transform: scaleX(0.5); }             "
+            + ".nbaDialog a { text-decoration: none; -webkit-tap-highlight-color: transparent; }"
+            + "</style>"
+            + "<div id=\"dialogs2\" style=\"display: none\">"
+            + "<div class=\"nbaMask\"></div>"
+            + "<div class=\"nbaDialog\">"
+            + "	<div class=\"nbaDialogHd\">"
+            + "		<strong class=\"nbaDialogTitle\"></strong>"
+            + "	</div>"
+            + "	<div class=\"nbaDialogBd\" id=\"dialog_msg2\">弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内</div>"
+            + "	<div class=\"nbaDialogHd\">"
+            + "		<strong class=\"nbaDialogTitle\"></strong>"
+            + "	</div>"
+            + "	<div class=\"nbaDialogFt\">"
+            + "		<a href=\"javascript:;\" class=\"nbaDialogBtn nbaDialogBtnPrimary\" id=\"dialog_ok2\">确定</a>"
+            + "	</div></div></div>";
+        document.body.appendChild(div);
+
+        var dialogs2 = document.getElementById("dialogs2");
+        dialogs2.style.display = 'block';
+
+        var dialog_msg2 = document.getElementById("dialog_msg2");
+        dialog_msg2.innerHTML = msg;
+
+        var dialog_ok2 = document.getElementById("dialog_ok2");
+        dialog_ok2.onclick = function() {
+            dialogs2.style.display = 'none';
+            callback();
+        };
+    };
+
+    function transformIntoTime(timestamp) {
+        var date = new Date();
+        date.setTime(timestamp * 1000);
+        var y = date.getFullYear();
+        var m = date.getMonth() + 1;
+        m = m < 10 ? ('0' + m) : m;
+        var d = date.getDate();
+        d = d < 10 ? ('0' + d) : d;
+        var h = date.getHours();
+        h = h < 10 ? ('0' + h) : h;
+        var minute = date.getMinutes();
+        var second = date.getSeconds();
+        minute = minute < 10 ? ('0' + minute) : minute;
+        second = second < 10 ? ('0' + second) : second;
+        return y + '-' + m + '-' + d+' '+h+':'+minute+':'+second;
+    }
+   var ip;
+   function refresh() {
+            var table = window.document.getElementById("monitor-table");
+            $.ajax({
+                type: "get",
+                dataType: "json",
+                url: "/getall",
+                success: function (msg) {
+                        var str = "";
+                        var obj= eval(msg);
+                        str +="<thead>" +"<tr>" +
+                            "<th>"+"device ip"+"</th>" +
+                            "<th>"+"device status"+"</th>" +
+                            "<th>"+"device timestamp"+"</th>" +
+                            "<th>"+"device details"+"</th>" +
+                            "</tr>" +"</thead>"+"<tbody>";
+                        $(obj).each(function (index){
+                            var val=obj[index];
+                            ip = val.ip;
+                            var status = val.status;
+                            var timestamp = val.timestamp;
+                            var time = transformIntoTime(timestamp);
+                            var detail = "details show";
+                            str += "<tr>" +
+                                "<td>" + ip+ "</td>" +
+                                "<td>" + status+ "</td>" +
+                                "<td>" + time+ "</td>" +
+                                "<td>" + "<a onclick='detailMethod()'>"+detail+"</a>"+ "</td>" +
+                                "</tr>";
+                        });
+                        str += "</tbody>";
+                        table.innerHTML = str;
+                    },
+                error: function () {
+                    alert("查询失败")
+                }
+            });
+        };
+
+    function online() {
+        var table = window.document.getElementById("monitor-table");
+        $.ajax({
+            type: "get",
+            dataType: "json",
+            url: "/now",
+            success: function (msg) {
+                var str = "";
+                str +="<thead>" +"<tr>" +
+                    "<th>"+"device ip"+"</th>" +
+                    "<th>"+"device status"+"</th>" +
+                    "<th>"+"device timestamp"+"</th>" +
+                    "<th>"+"device config"+"</th>" +
+                    "<th>"+"device detail"+"</th>" +
+                    "</tr>" +"</thead>"+"<tbody>";
+                for (var item1 in msg){
+                 //   alert("item1"+ item1)
+                   var val =  msg[item1];
+                 // alert("111---"+val)
+                    var vall = $.parseJSON(val);
+                    str += "<tr>";
+                   for( var item2 in vall){
+
+                       if(item2 == "timestamp" ){
+                           str += "<td>" + transformIntoTime(vall[item2])+ "</td>";
+                       }else{
+                           if(item2=="ip"){
+                               ip = vall[item2];
+                           }
+                           str += "<td>" + vall[item2]+ "</td>";
+                       }
+                    }
+                    str += "<td>" + "<a onclick='onlineMethod()'>"+"details show"+"</a>"+ "</td>" +
+                        "</tr>";
+                }
+
+                str += "</tbody>";
+                table.innerHTML = str;
+            },
+            error: function () {
+                alert("查询失败")
+            }
+        });
+    };
+
+   function withdraw() {
+      var username = getCookie("username");
+       $.ajax({
+           type: "get",
+           dataType: "json",
+           url: "/user_withdraw?username="+username,
+           success: function (msg) {
+               alert("删除成功")
+           },
+           error: function () {
+               alert("删除失败")
+           }
+       });
+
+   }
+
+    function getCookie(cookie_name)
+    {
+        var allcookies = document.cookie;
+        var cookie_pos = allcookies.indexOf(cookie_name);   //索引的长度
+
+        // 如果找到了索引，就代表cookie存在，
+        // 反之，就说明不存在。
+        if (cookie_pos != -1)
+        {
+            // 把cookie_pos放在值的开始，只要给值加1即可。
+            cookie_pos += cookie_name.length + 1;
+            var cookie_end = allcookies.indexOf(";", cookie_pos);
+
+            if (cookie_end == -1)
+            {
+                cookie_end = allcookies.length;
+            }
+
+            var value = unescape(allcookies.substring(cookie_pos, cookie_end));
+        }
+        return value;
+    }
+
+
+   function detailMethod() {
+         $.ajax({
+           type: "GET",
+           url: "/getone/config?ip="+ip,
+           dataType:"json",
+           success:function(result){
+               var obj= eval(result);
+               alert("IP："+ip+"\n"+
+                   "设备信息："+obj.data);
+
+           },
+           error: function(result){
+               alert("查询失败")
+// 请求失败后的操作
+           }
+           });
+       // });
+   }
+   //查看在线信息
+    function onlineMethod() {
+        $.ajax({
+            type: "get",
+            url: "/getone/online?ip="+ip,
+            dataType:"json",
+            success:function(result){
+                alert("ip: "+result["ip"]+"\n"
+                +"  status: "+result["status"]+"\n"
+                +"  timestamp: "+transformIntoTime(result["timestamp"])+"\n"
+                +"  config: "+result["config"]+"\n");
+            },
+            error: function(result){
+                alert("查询失败")
+// 请求失败后的操作
+            }
+        });
+        // });
+    }
+
+</script>
+
+
+</body>
+
+</html>

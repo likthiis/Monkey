@@ -1,9 +1,6 @@
 package com.monkey.banana.DAO;
 
-import com.monkey.banana.Class.DeviceConfig;
-import com.monkey.banana.Class.DeviceInfo;
-import com.monkey.banana.Class.DeviceModel;
-import com.monkey.banana.Class.SendModel;
+import com.monkey.banana.Class.*;
 import com.monkey.banana.SelfChecking.SelfChecking;
 import com.monkey.banana.SelfChecking.SelfCheckingThread;
 import org.apache.ibatis.annotations.Param;
@@ -39,6 +36,16 @@ public interface DeviceConditionDAO {
     public int heartbeatUpdate(@Param("ip")String id, @Param("timestamp")String timestamp); // 已经配置
 
     public DeviceInfo getDeviceInfoByIp(@Param("ip")String id); // 已经配置
+
+
+    public int registerUser(@Param("userInfo")UserInfo userInfo); // 已经配置
+
+    public int checkUserExistence(@Param("userInfo")UserInfo userInfo); // 已经配置
+
+    public int withdrawUser(@Param("username")String username); // 已经配置
+
+    public int checkUserExistenceJustById(@Param("username")String username); // 已经配置
+
 
     public int updataDeviceByStatus (String id,String status);
     public List<DeviceModel> showAllDevices();

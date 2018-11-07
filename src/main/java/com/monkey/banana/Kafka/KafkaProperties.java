@@ -2,7 +2,7 @@ package com.monkey.banana.Kafka;
 
 public interface KafkaProperties {
     final static String zkConnect = "192.168.96.131:2181";
-    final static String groupId = "bananice";
+    final static String groupId = "bananice2";
     final static String topic = "starrevue";
 
     final static String kafkaServerURL = "192.168.96.131";

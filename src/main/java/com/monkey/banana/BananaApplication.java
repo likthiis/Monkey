@@ -4,7 +4,10 @@ import com.google.gson.Gson;
 import com.monkey.banana.Class.DeviceModel;
 import com.monkey.banana.Controller.KafkaReceiveController;
 import com.monkey.banana.Feed.TempListSaver;
+import com.monkey.banana.Kafka.KafkaConsumer;
+import com.monkey.banana.Kafka.KafkaProperties;
 import com.monkey.banana.SelfChecking.SelfCheckingThread;
+import org.apache.log4j.BasicConfigurator;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -12,19 +15,17 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class BananaApplication {
 
     private static Gson gson = new Gson();
-    private static KafkaReceiveController unitTest;
+    private static KafkaReceiveController unitTest = new KafkaReceiveController();;
     private static TempListSaver tmpS = new TempListSaver();
     private static SelfCheckingThread sfT = new SelfCheckingThread();
 
-    public static void main(String[] args) throws InterruptedException {
+
+    public static void main(String[] args) {
         //SpringApplication.run(BananaApplication.class, args);
-
-        unitTest = new KafkaReceiveController();
-
 
         // 单元测试
         // 批量注册
-        insertBath();
+        //insertBath();
 
         // 改变配置
         //changeConfigByIp("127.0.0.4", "dell");
@@ -43,8 +44,11 @@ public class BananaApplication {
         SpringApplication.run(BananaApplication.class, args);
         tmpS.start();
         sfT.start();
+        BasicConfigurator.configure();
+        //KafkaConsumer consumerThread = new KafkaConsumer(KafkaProperties.topic);
+        //consumerThread.start();
         // 注册设备+发送心跳包
-        registerAndKeepingSend("192.168.1.102");
+        //registerAndKeepingSend("192.168.1.102");
     }
 
     private static void registerAndKeepingSend(String ip) throws InterruptedException {
