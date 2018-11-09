@@ -1,5 +1,10 @@
 package com.monkey.banana.Util;
 
+import com.monkey.banana.Class.UserInfo;
+import com.monkey.banana.DAO.DeviceConditionDAO;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import java.sql.Timestamp;
 
 public class Tools {
@@ -24,5 +29,17 @@ public class Tools {
         // 逻辑：心跳包最新时间减去偏移量后，必须早于记录的时间！！！这样才是有效的！！！！！！
         // 如果是有效的，那么before将获得false
         return !last.before(new Timestamp(nowTimeStamp - myOffset));
+    }
+
+    public static boolean UserLoginSit(String username) {
+        ApplicationContext atc = new ClassPathXmlApplicationContext("spring.xml");
+        DeviceConditionDAO dcDAO = (DeviceConditionDAO) atc.getBean("deviceConditionDAO");
+        int result = dcDAO.checkLoginStatus(username);
+
+        if(result == 1) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

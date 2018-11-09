@@ -81,7 +81,7 @@
     </select>
 
 
-    <!-- 注册与登录模块:实现：1.注册 2.登录 3.注销-->
+    <!-- 注册模块:实现：1.注册 2.注销-->
     <insert id="registerUser">
         insert into user values (#{userInfo.username},#{userInfo.password})
     </insert>
@@ -96,5 +96,22 @@
 
     <delete id="withdrawUser">
         delete from user where username = #{username}
+    </delete>
+
+    <!-- 登录模块:实现：1.上线 2.下线-->
+    <insert id="loginUser">
+        insert into login_sure values (#{username})
+    </insert>
+
+    <select id="checkLoginInfoVaild" resultType="int">
+        select count(*) from user where username = #{userInfo.username} and password = #{userInfo.password}
+    </select>
+
+    <select id="checkLoginStatus" resultType="int">
+        select count(*) from login_sure where username = #{username}
+    </select>
+
+    <delete id="offUser">
+        delete from login_sure where username = #{username}
     </delete>
 </mapper>

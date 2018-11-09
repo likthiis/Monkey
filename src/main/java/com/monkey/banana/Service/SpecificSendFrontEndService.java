@@ -31,7 +31,7 @@ public class SpecificSendFrontEndService {
 
             // 查询baseinfo中的数据和config中的数据，合起来发给控制器
             status = dcDAO.statusShowSpecific(ip);
-            if(status.equals(null)) {
+            if(status == null) {
                 System.out.println("[发送指定设备信息]查询无结果");
                 return "error_dont_exist";
             } else {

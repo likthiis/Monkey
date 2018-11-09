@@ -46,6 +46,15 @@ public interface DeviceConditionDAO {
 
     public int checkUserExistenceJustById(@Param("username")String username); // 已经配置
 
+    public int loginUser(@Param("username")String username); // 已经配置
+
+    public int checkLoginStatus(@Param("username")String username); // 已经配置
+
+    public int checkLoginInfoVaild(@Param("userInfo")UserInfo userInfo); // 已经配置
+
+    public int offUser(@Param("username")String username); // 已经配置
+
+
 
     public int updataDeviceByStatus (String id,String status);
     public List<DeviceModel> showAllDevices();
